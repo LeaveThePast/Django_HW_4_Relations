@@ -4,6 +4,10 @@ from django.db import models
 class Tag(models.Model):
     name = models.CharField(max_length=220)
 
+    class Meta:
+        verbose_name = 'Тэг'
+        verbose_name_plural = 'Тэги'
+
     def __str__(self):
         return self.name
 
@@ -13,7 +17,7 @@ class Article(models.Model):
     text = models.TextField(verbose_name='Текст')
     published_at = models.DateTimeField(verbose_name='Дата публикации')
     image = models.ImageField(null=True, blank=True, verbose_name='Изображение', )
-    scopes = models.ManyToManyField(Tag, through='Scope')
+    scopes = models.ManyToManyField(Tag, through='Scope', related_name='tag')
 
     class Meta:
         verbose_name = 'Статья'
@@ -27,7 +31,12 @@ class Article(models.Model):
 class Scope(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
-    is_main = models.BooleanField()
+    is_main = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = 'Скоуп'
+        verbose_name_plural = 'Скоупы'
 
     def __str__(self):
         return f"{self.article.title}, {self.tag.name}, main={self.is_main}"
+
