@@ -17,7 +17,8 @@ class Article(models.Model):
     text = models.TextField(verbose_name='Текст')
     published_at = models.DateTimeField(verbose_name='Дата публикации')
     image = models.ImageField(null=True, blank=True, verbose_name='Изображение', )
-    scopes = models.ManyToManyField(Tag, through='Scope', related_name='tag')
+    scopes = models.ManyToManyField(Tag, through='Scope', #related_name='tag'
+    )
 
     class Meta:
         verbose_name = 'Статья'
